@@ -763,18 +763,11 @@ def student_photos(request, id):
 
     student = get_object_or_404(Student, id=id)
 
-    return render(
-        request,
-        "school/students/photos.html",
-        {
-            "student": student,
-        }
+    folder_path = os.path.join(
+        settings.MEDIA_ROOT,
+        "Photos",
+        str(student.id)
     )
-
-@login_required(login_url="login")
-def student_photos(request, id):
-
-    student = get_object_or_404(Student, id=id)
 
     if request.method == "POST":
 
@@ -782,37 +775,27 @@ def student_photos(request, id):
 
             photo = request.FILES["photo"]
 
-            folder_path = os.path.join(
-                settings.MEDIA_ROOT,
-                "Photos",
-                str(student.id)
-            )
-
             os.makedirs(folder_path, exist_ok=True)
 
             storage = FileSystemStorage(location=folder_path)
 
             storage.save(photo.name, photo)
-            folder_path = os.path.join(
-                settings.MEDIA_ROOT,
-                "Photos",
-                str(student.id)
-                )
 
-            photos = []
-            if os.path.exists(folder_path):
-                for file in os.listdir(folder_path):
-                    photos.append(
-                        f"/media/Photos/{student.id}/{file}"
-                        )
+    photos = []
+
+    if os.path.exists(folder_path):
+
+        for file in os.listdir(folder_path):
+
+            photos.append(
+                f"/media/Photos/{student.id}/{file}"
+            )
 
     return render(
         request,
         "school/students/photos.html",
         {
-           {
-               "student": student,
-               "photos": photos,
-            }
+            "student": student,
+            "photos": photos,
         }
     )
