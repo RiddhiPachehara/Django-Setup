@@ -5,6 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import re
+import os
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 def home(request): 
     return render(request, 'school/home.html')
