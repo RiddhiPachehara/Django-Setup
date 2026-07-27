@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Student Photos</title>
+
+</head>
+
+<body>
+
+<h1>
+
+Photos of {{ student.first_name }} {{ student.last_name }}
+
+</h1>
+
+<p>
+
+<a href="/dashboard/students/">
+
+← Back to Students
+
+</a>
+
+</p>
+
+<hr>
+
+<h3>
+
+Upload Photo
+
+</h3>
+
+<form method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <input
+        type="file"
+        name="photo"
+    >
+
+    <br><br>
+
+    <button type="submit">
+
+        Upload
+
+    </button>
+
+</form>
+
+<hr>
+
+<h3>
+
+Uploaded Photos
+
+</h3>
+
+<p>
+
+No photos uploaded yet.
+
+</p>
+
+</body>
+
+</html>

@@ -754,3 +754,16 @@ def student_delete(request, id):
 def logout_view(request):
     logout(request)
     return redirect("login")
+
+@login_required(login_url="login")
+def student_photos(request, id):
+
+    student = get_object_or_404(Student, id=id)
+
+    return render(
+        request,
+        "school/students/photos.html",
+        {
+            "student": student,
+        }
+    )
