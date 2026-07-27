@@ -64,4 +64,9 @@ path(
     views.student_photos,
     name="student_photos",
 ),
+path(
+    "dashboard/students/<int:id>/photos/delete/",
+    views.delete_student_photo,
+    name="delete_student_photo",
+),
 ] 
