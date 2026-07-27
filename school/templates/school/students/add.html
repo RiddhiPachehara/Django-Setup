@@ -2,7 +2,24 @@
 <html>
 
 <head>
+
     <title>Add Student</title>
+
+    <style>
+
+        .error{
+            color:red;
+            font-size:14px;
+            display:block;
+            margin-top:5px;
+        }
+
+        .error-input{
+            border:2px solid red;
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -13,18 +30,24 @@
     <a href="/dashboard/students/">← Back</a>
 </p>
 
-<form method="POST" id="schoolForm" novalidate>
+<form method="POST" id="studentForm" novalidate>
 
     {% csrf_token %}
 
     <p>
+
         <label>Classroom</label><br>
 
-        <select name="classroom" >
+        <select id="classroom" name="classroom">
+
+            <option value="">Select Classroom</option>
 
             {% for classroom in classrooms %}
 
-            <option value="{{ classroom.id }}">
+            <option
+                value="{{ classroom.id }}"
+                {% if old.classroom == classroom.id|stringformat:"s" %}selected{% endif %}
+            >
                 {{ classroom.class_name }}
             </option>
 
@@ -32,26 +55,78 @@
 
         </select>
 
+        <span class="error" id="classroomError">
+            {{ errors.classroom }}
+        </span>
+
     </p>
 
     <p>
+
         <label>First Name</label><br>
-        <input type="text" name="first_name" novalidate>
+
+        <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            value="{{ old.first_name }}"
+        >
+
+        <span class="error" id="firstNameError">
+            {{ errors.first_name }}
+        </span>
+
     </p>
 
     <p>
+
         <label>Last Name</label><br>
-        <input type="text" name="last_name" novalidate>
+
+        <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            value="{{ old.last_name }}"
+        >
+
+        <span class="error" id="lastNameError">
+            {{ errors.last_name }}
+        </span>
+
     </p>
 
     <p>
+
         <label>Age</label><br>
-        <input type="number" name="age" novalidate>
+
+        <input
+            type="number"
+            id="age"
+            name="age"
+            value="{{ old.age }}"
+        >
+
+        <span class="error" id="ageError">
+            {{ errors.age }}
+        </span>
+
     </p>
 
     <p>
+
         <label>Roll Number</label><br>
-        <input type="number" name="roll_number" novalidate>
+
+        <input
+            type="number"
+            id="roll_number"
+            name="roll_number"
+            value="{{ old.roll_number }}"
+        >
+
+        <span class="error" id="rollNumberError">
+            {{ errors.roll_number }}
+        </span>
+
     </p>
 
     <button type="submit">
@@ -61,4 +136,5 @@
 </form>
 
 </body>
+
 </html>
