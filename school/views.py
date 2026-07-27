@@ -769,11 +769,39 @@ def student_photos(request, id):
         str(student.id)
     )
 
+    photos = []
+
+    if os.path.exists(folder_path):
+        for file in os.listdir(folder_path):
+            photos.append(f"/media/Photos/{student.id}/{file}")
+
     if request.method == "POST":
 
         if "photo" in request.FILES:
 
             photo = request.FILES["photo"]
+
+            allowed_extensions = [
+                ".jpg",
+                ".jpeg",
+                ".png",
+                ".gif",
+                ".webp"
+            ]
+
+            extension = os.path.splitext(photo.name)[1].lower()
+
+            if extension not in allowed_extensions:
+
+                return render(
+                    request,
+                    "school/students/photos.html",
+                    {
+                        "student": student,
+                        "photos": photos,
+                        "upload_error": "Only image files are allowed."
+                    }
+                )
 
             os.makedirs(folder_path, exist_ok=True)
 
@@ -781,15 +809,7 @@ def student_photos(request, id):
 
             storage.save(photo.name, photo)
 
-    photos = []
-
-    if os.path.exists(folder_path):
-
-        for file in os.listdir(folder_path):
-
-            photos.append(
-                f"/media/Photos/{student.id}/{file}"
-            )
+            return redirect("student_photos", id=student.id)
 
     return render(
         request,
