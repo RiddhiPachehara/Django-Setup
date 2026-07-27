@@ -58,23 +58,42 @@ Upload Photo
 
 {% if photos %}
 
-    {% for photo in photos %}
+   {% for photo in photos %}
 
-        <div style="margin-bottom:20px;">
+<div style="margin-bottom:20px;">
 
-            <img
-                src="{{ photo }}"
-                width="200"
-                style="border:1px solid #ccc;"
-            >
+    <img
+        src="{{ photo }}"
+        width="200"
+        style="border:1px solid #ccc;"
+    >
 
-            <br>
+    <br><br>
 
-            {{ photo }}
+    <form
+        method="POST"
+        action="/dashboard/students/{{ student.id }}/photos/delete/"
+    >
 
-        </div>
+        {% csrf_token %}
 
-    {% endfor %}
+        <input
+            type="hidden"
+            name="photo"
+            value="{{ photo }}"
+        >
+
+        <button type="submit">
+
+            Delete Photo
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endfor %}
 
 {% else %}
 
