@@ -54,17 +54,33 @@ Upload Photo
 
 <hr>
 
-<h3>
+<h3>Uploaded Photos</h3>
 
-Uploaded Photos
+{% if photos %}
 
-</h3>
+    {% for photo in photos %}
 
-<p>
+        <div style="margin-bottom:20px;">
 
-No photos uploaded yet.
+            <img
+                src="{{ photo }}"
+                width="200"
+                style="border:1px solid #ccc;"
+            >
 
-</p>
+            <br>
+
+            {{ photo }}
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+<p>No photos uploaded yet.</p>
+
+{% endif %}
 
 </body>
 
