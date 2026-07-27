@@ -770,3 +770,34 @@ def student_photos(request, id):
             "student": student,
         }
     )
+
+@login_required(login_url="login")
+def student_photos(request, id):
+
+    student = get_object_or_404(Student, id=id)
+
+    if request.method == "POST":
+
+        if "photo" in request.FILES:
+
+            photo = request.FILES["photo"]
+
+            folder_path = os.path.join(
+                settings.MEDIA_ROOT,
+                "Photos",
+                str(student.id)
+            )
+
+            os.makedirs(folder_path, exist_ok=True)
+
+            storage = FileSystemStorage(location=folder_path)
+
+            storage.save(photo.name, photo)
+
+    return render(
+        request,
+        "school/students/photos.html",
+        {
+            "student": student,
+        }
+    )
