@@ -135,6 +135,106 @@
 
 </form>
 
+<script>
+
+const form = document.getElementById("studentForm");
+
+form.addEventListener("submit", function(e){
+
+    let valid = true;
+
+    document.querySelectorAll(".error").forEach(function(error){
+        error.innerHTML = "";
+    });
+
+    document.querySelectorAll("input,select").forEach(function(field){
+        field.classList.remove("error-input");
+    });
+
+    const classroom = document.getElementById("classroom");
+
+    if(classroom.value === ""){
+
+        document.getElementById("classroomError").innerHTML =
+        "Please select a classroom.";
+
+        classroom.classList.add("error-input");
+
+        valid = false;
+
+    }
+
+    const firstName = document.getElementById("first_name");
+
+    if(firstName.value.trim() === ""){
+
+        document.getElementById("firstNameError").innerHTML =
+        "First name is required.";
+
+        firstName.classList.add("error-input");
+
+        valid = false;
+
+    }
+
+    const lastName = document.getElementById("last_name");
+
+    if(lastName.value.trim() === ""){
+
+        document.getElementById("lastNameError").innerHTML =
+        "Last name is required.";
+
+        lastName.classList.add("error-input");
+
+        valid = false;
+
+    }
+
+    const age = document.getElementById("age");
+
+    if(age.value.trim() === ""){
+
+        document.getElementById("ageError").innerHTML =
+        "Age is required.";
+
+        age.classList.add("error-input");
+
+        valid = false;
+
+    }
+    else if(parseInt(age.value) < 3 || parseInt(age.value) > 100){
+
+        document.getElementById("ageError").innerHTML =
+        "Enter a valid age.";
+
+        age.classList.add("error-input");
+
+        valid = false;
+
+    }
+
+    const roll = document.getElementById("roll_number");
+
+    if(roll.value.trim() === ""){
+
+        document.getElementById("rollNumberError").innerHTML =
+        "Roll number is required.";
+
+        roll.classList.add("error-input");
+
+        valid = false;
+
+    }
+
+    if(!valid){
+
+        e.preventDefault();
+
+    }
+
+});
+
+</script>
 </body>
 
 </html>
