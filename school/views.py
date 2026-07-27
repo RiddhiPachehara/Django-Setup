@@ -799,3 +799,29 @@ def student_photos(request, id):
             "photos": photos,
         }
     )
+
+@login_required(login_url="login")
+def delete_student_photo(request, id):
+
+    student = get_object_or_404(Student, id=id)
+
+    if request.method == "POST":
+
+        photo = request.POST.get("photo")
+
+        if photo:
+
+            filename = os.path.basename(photo)
+
+            file_path = os.path.join(
+                settings.MEDIA_ROOT,
+                "Photos",
+                str(student.id),
+                filename
+            )
+
+            if os.path.exists(file_path):
+
+                os.remove(file_path)
+
+    return redirect("student_photos", id=student.id)
