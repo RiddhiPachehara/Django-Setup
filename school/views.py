@@ -781,6 +781,18 @@ def student_photos(request, id):
 
             photo = request.FILES["photo"]
 
+            if photo.size > 5 * 1024 * 1024:
+
+                return render(
+        request,
+        "school/students/photos.html",
+        {
+            "student": student,
+            "photos": photos,
+            "upload_error": "Image size must be less than 5 MB."
+        }
+    )
+
             allowed_extensions = [
                 ".jpg",
                 ".jpeg",
