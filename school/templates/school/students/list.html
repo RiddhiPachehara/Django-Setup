@@ -22,6 +22,7 @@
         <th>Age</th>
         <th>Roll Number</th>
         <th>Actions</th>
+        <th>Photos</th>
     </tr>
 
     {% for student in students %}
@@ -35,10 +36,22 @@
         <td>{{ student.roll_number }}</td>
 
         <td>
-            <a href="/dashboard/students/edit/{{ student.id }}/">Edit</a>
-            |
-            <a href="/dashboard/students/delete/{{ student.id }}/">Delete</a>
-        </td>
+
+<a href="/dashboard/students/edit/{{ student.id }}/">Edit</a>
+
+|
+
+<a href="/dashboard/students/delete/{{ student.id }}/">Delete</a>
+
+</td>
+
+<td>
+
+<a href="/dashboard/students/{{ student.id }}/photos/">
+    Photos
+</a>
+
+</td>
     </tr>
 
     {% empty %}
