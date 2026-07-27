@@ -571,22 +571,82 @@ def student_list(request):
 def student_edit(request, id):
 
     student = get_object_or_404(Student, id=id)
+    classrooms = Classroom.objects.all()
 
     if request.method == "POST":
 
         classroom_id = request.POST.get("classroom")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        age = request.POST.get("age")
+        roll_number = request.POST.get("roll_number")
 
-        student.classroom = Classroom.objects.get(id=classroom_id)
-        student.first_name = request.POST.get("first_name")
-        student.last_name = request.POST.get("last_name")
-        student.age = request.POST.get("age")
-        student.roll_number = request.POST.get("roll_number")
+        errors = {}
+
+        if not classroom_id:
+            errors["classroom"] = "Please select a classroom."
+
+        if not first_name.strip():
+            errors["first_name"] = "First name is required."
+
+        if not last_name.strip():
+            errors["last_name"] = "Last name is required."
+
+        if not age:
+            errors["age"] = "Age is required."
+        else:
+            try:
+                age = int(age)
+
+                if age < 3 or age > 100:
+                    errors["age"] = "Enter a valid age."
+
+            except:
+                errors["age"] = "Age must be a number."
+
+        if not roll_number:
+            errors["roll_number"] = "Roll number is required."
+        else:
+            try:
+                roll_number = int(roll_number)
+
+                if Student.objects.filter(
+                    roll_number=roll_number
+                ).exclude(id=student.id).exists():
+
+                    errors["roll_number"] = "Roll number already exists."
+
+            except:
+                errors["roll_number"] = "Roll number must be numeric."
+
+        if classroom_id:
+            try:
+                classroom = Classroom.objects.get(id=classroom_id)
+            except Classroom.DoesNotExist:
+                errors["classroom"] = "Selected classroom does not exist."
+
+        if errors:
+
+            return render(
+                request,
+                "school/students/edit.html",
+                {
+                    "student": student,
+                    "classrooms": classrooms,
+                    "errors": errors,
+                    "old": request.POST,
+                }
+            )
+
+        student.classroom = classroom
+        student.first_name = first_name
+        student.last_name = last_name
+        student.age = age
+        student.roll_number = roll_number
 
         student.save()
 
         return redirect("student_list")
-
-    classrooms = Classroom.objects.all()
 
     return render(
         request,
