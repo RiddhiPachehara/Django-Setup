@@ -793,11 +793,26 @@ def student_photos(request, id):
             storage = FileSystemStorage(location=folder_path)
 
             storage.save(photo.name, photo)
+            folder_path = os.path.join(
+                settings.MEDIA_ROOT,
+                "Photos",
+                str(student.id)
+                )
+
+            photos = []
+            if os.path.exists(folder_path):
+                for file in os.listdir(folder_path):
+                    photos.append(
+                        f"/media/Photos/{student.id}/{file}"
+                        )
 
     return render(
         request,
         "school/students/photos.html",
         {
-            "student": student,
+           {
+               "student": student,
+               "photos": photos,
+            }
         }
     )
