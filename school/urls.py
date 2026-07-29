@@ -69,4 +69,27 @@ path(
     views.delete_student_photo,
     name="delete_student_photo",
 ),
+path(
+    "dashboard/library/",
+    views.library_list,
+    name="library_list"
+),
+
+path(
+    "dashboard/library/add/",
+    views.library_add,
+    name="library_add"
+),
+
+path(
+    "dashboard/library/edit/<int:id>/",
+    views.library_edit,
+    name="library_edit"
+),
+
+path(
+    "dashboard/library/delete/<int:id>/",
+    views.library_delete,
+    name="library_delete"
+),
 ] 
