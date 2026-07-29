@@ -38,3 +38,23 @@ class Teacher(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class Library(models.Model):
+
+    book_name = models.CharField(max_length=200)
+
+    author = models.CharField(max_length=100)
+
+    isbn = models.CharField(
+        max_length=20,
+        unique=True
+    )
+
+    category = models.CharField(max_length=100)
+
+    quantity = models.PositiveIntegerField()
+
+    rack_number = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.book_name
