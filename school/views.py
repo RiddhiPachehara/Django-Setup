@@ -38,6 +38,7 @@ def students(request):
 
 @login_required(login_url="login")
 def dashboard(request):
+
     context = {
         "school_count": School.objects.count(),
         "classroom_count": Classroom.objects.count(),
@@ -443,7 +444,7 @@ def teacher_add(request):
             return render(
                 request,
                 "school/teachers/add.html",
-                {
+                {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
                     "errors": errors,
                     "classrooms": classrooms,
                     "old": request.POST,
